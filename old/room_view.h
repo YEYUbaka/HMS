@@ -1,6 +1,5 @@
-#pragma once
+﻿#pragma once
 #include "room_view.h"
-#include "room_manager.h"
 #include "room_manager.h"
 class RoomView
 {

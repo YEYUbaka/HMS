@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "guest_room.h"
 #include "room_manager.h"
 #include <map>

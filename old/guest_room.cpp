@@ -1,4 +1,4 @@
-#define _CRT_SECURE_NO_WARNINGS
+ï»¿#define _CRT_SECURE_NO_WARNINGS
 #include "guest_room.h"
 #include <time.h>
 #include <iostream>
@@ -8,24 +8,24 @@
 
 using namespace std;
 
-// ¶¨Òå×Ö·ûÖ¸Õë£¬Ö¸ÏòÒ»¸öÎÄ¼ş
+// å®šä¹‰å­—ç¬¦æŒ‡é’ˆï¼ŒæŒ‡å‘ä¸€ä¸ªæ–‡ä»¶
 const char* const room_data_file = "room.dat";
 
-// GuestRoom ¹¹Ôìº¯ÊıÊµÏÖ
+// GuestRoom æ„é€ å‡½æ•°å®ç°
 GuestRoom::GuestRoom(string name, int price, int bed_num, int area, ROOM_STATE state)
     : m_name(name), m_price(price), m_bed_number(bed_num), m_area(area), m_state(state) {
     this->m_number = generate_number();
 }
 
-// Éú³É¿Í·¿±àºÅ
+// ç”Ÿæˆå®¢æˆ¿ç¼–å·
 string GuestRoom::generate_number() {
-    // ±¾µØÊ±¼ä×ª»»×Ö·û´®
+    // æœ¬åœ°æ—¶é—´è½¬æ¢å­—ç¬¦ä¸²
     time_t my_time = time(NULL);
     struct tm* my_tm = localtime(&my_time);
     char tim_buff[128] = { 0 };
     sprintf(tim_buff, "%d%d", my_tm->tm_yday, my_tm->tm_sec);
 
-    // Éú³ÉËæ»úÊı
+    // ç”Ÿæˆéšæœºæ•°
     static bool is_seeded = false;
     if (!is_seeded) {
         srand(static_cast<unsigned>(time(NULL)));
@@ -35,137 +35,137 @@ string GuestRoom::generate_number() {
     char buf[128] = { 0 };
     sprintf(buf, "%d", rand_num);
 
-    // Æ´½Ó×Ö·û´®×÷Îª·¿¼ä±àºÅ
+    // æ‹¼æ¥å­—ç¬¦ä¸²ä½œä¸ºæˆ¿é—´ç¼–å·
     return string(tim_buff) + string(buf);
 }
 
-// ¿Í·¿×´Ì¬ÏÔÊ¾
+// å®¢æˆ¿çŠ¶æ€æ˜¾ç¤º
 string GuestRoom::show_state() {
     if (m_state == FREE) {
-        return "¿ÕÏĞ";
+        return "ç©ºé—²";
     } else if (m_state == CHECK_IN) {
-        return "Èë×¡";
+        return "å…¥ä½";
     } else {
-        return "Î´Öª×´Ì¬";
+        return "æœªçŸ¥çŠ¶æ€";
     }
 }
 
-// ±£´æÊı¾İ (map ÈİÆ÷£¬key£º¿Í·¿±àºÅ£¬value£º¿Í·¿¶ÔÏó)
+// ä¿å­˜æ•°æ® (map å®¹å™¨ï¼Œkeyï¼šå®¢æˆ¿ç¼–å·ï¼Œvalueï¼šå®¢æˆ¿å¯¹è±¡)
 bool GuestRoom::save_data(map<string, GuestRoom>& room_list) {
-    // 1. ´ò¿ªÎÄ¼ş
+    // 1. æ‰“å¼€æ–‡ä»¶
     ofstream ofs(room_data_file, ios::binary | ios::trunc);
     if (!ofs) {
-        cerr << "ÎŞ·¨´ò¿ªÎÄ¼ş: " << room_data_file << endl;
+        cerr << "æ— æ³•æ‰“å¼€æ–‡ä»¶: " << room_data_file << endl;
         return false;
     }
 
-    // 2. Ğ´Èë¶ÔÏóÊı¾İ
+    // 2. å†™å…¥å¯¹è±¡æ•°æ®
     for (const auto& pair : room_list) {
         const GuestRoom& room = pair.second;
 
-        // Ğ´Èë m_name ³ÉÔ±±äÁ¿ËùÕ¼ÄÚ´æ´óĞ¡¼°ÆäÖµ
+        // å†™å…¥ m_name æˆå‘˜å˜é‡æ‰€å å†…å­˜å¤§å°åŠå…¶å€¼
         size_t name_len = room.m_name.size();
         ofs.write(reinterpret_cast<const char*>(&name_len), sizeof(size_t));
         ofs.write(room.m_name.c_str(), name_len);
 
-        // Ğ´Èë m_price ³ÉÔ±±äÁ¿
+        // å†™å…¥ m_price æˆå‘˜å˜é‡
         ofs.write(reinterpret_cast<const char*>(&room.m_price), sizeof(int));
 
-        // Ğ´Èë m_bed_number ³ÉÔ±±äÁ¿
+        // å†™å…¥ m_bed_number æˆå‘˜å˜é‡
         ofs.write(reinterpret_cast<const char*>(&room.m_bed_number), sizeof(int));
 
-        // Ğ´Èë m_area ³ÉÔ±±äÁ¿
+        // å†™å…¥ m_area æˆå‘˜å˜é‡
         ofs.write(reinterpret_cast<const char*>(&room.m_area), sizeof(int));
 
-        // Ğ´Èë m_number ³ÉÔ±±äÁ¿ËùÕ¼ÄÚ´æ´óĞ¡¼°ÆäÖµ
+        // å†™å…¥ m_number æˆå‘˜å˜é‡æ‰€å å†…å­˜å¤§å°åŠå…¶å€¼
         size_t number_len = room.m_number.size();
         ofs.write(reinterpret_cast<const char*>(&number_len), sizeof(size_t));
         ofs.write(room.m_number.c_str(), number_len);
 
-        // Ğ´Èë m_state ³ÉÔ±±äÁ¿
+        // å†™å…¥ m_state æˆå‘˜å˜é‡
         ofs.write(reinterpret_cast<const char*>(&room.m_state), sizeof(ROOM_STATE));
     }
 
-    // 3. ¹Ø±ÕÎÄ¼ş
+    // 3. å…³é—­æ–‡ä»¶
     ofs.close();
     return true;
 }
 
-// ¶ÁÈ¡Êı¾İ
+// è¯»å–æ•°æ®
 map<string, GuestRoom> GuestRoom::read_data() {
     map<string, GuestRoom> room_list;
     ifstream ifs(room_data_file, ios::binary);
     if (!ifs) {
-        cerr << "ÎŞ·¨´ò¿ªÎÄ¼ş: " << room_data_file << endl;
+        cerr << "æ— æ³•æ‰“å¼€æ–‡ä»¶: " << room_data_file << endl;
         return room_list;
     }
 
     while (ifs.peek() != EOF) {
         GuestRoom room;
 
-        // ¶ÁÈë m_name ³ÉÔ±±äÁ¿ËùÕ¼ÄÚ´æ´óĞ¡¼°ÆäÖµ
+        // è¯»å…¥ m_name æˆå‘˜å˜é‡æ‰€å å†…å­˜å¤§å°åŠå…¶å€¼
         size_t name_len = 0;
         ifs.read(reinterpret_cast<char*>(&name_len), sizeof(size_t));
-        if (ifs.eof()) break;  // ¼ì²éÊÇ·ñµ½´ïÎÄ¼şÄ©Î²
-        vector<char> name_buffer(name_len + 1, '\0');  // ¶¯Ì¬·ÖÅä»º³åÇø
+        if (ifs.eof()) break;  // æ£€æŸ¥æ˜¯å¦åˆ°è¾¾æ–‡ä»¶æœ«å°¾
+        vector<char> name_buffer(name_len + 1, '\0');  // åŠ¨æ€åˆ†é…ç¼“å†²åŒº
         ifs.read(&name_buffer[0], name_len);
-        room.m_name.assign(&name_buffer[0], name_len);  // Ê¹ÓÃ assign ¶ø²»ÊÇÖ±½Ó¸³Öµ
+        room.m_name.assign(&name_buffer[0], name_len);  // ä½¿ç”¨ assign è€Œä¸æ˜¯ç›´æ¥èµ‹å€¼
 
-        // ¶ÁÈë m_price ³ÉÔ±±äÁ¿
+        // è¯»å…¥ m_price æˆå‘˜å˜é‡
         ifs.read(reinterpret_cast<char*>(&room.m_price), sizeof(int));
 
-        // ¶ÁÈë m_bed_number ³ÉÔ±±äÁ¿
+        // è¯»å…¥ m_bed_number æˆå‘˜å˜é‡
         ifs.read(reinterpret_cast<char*>(&room.m_bed_number), sizeof(int));
 
-        // ¶ÁÈë m_area ³ÉÔ±±äÁ¿
+        // è¯»å…¥ m_area æˆå‘˜å˜é‡
         ifs.read(reinterpret_cast<char*>(&room.m_area), sizeof(int));
 
-        // ¶ÁÈë m_state ³ÉÔ±±äÁ¿
+        // è¯»å…¥ m_state æˆå‘˜å˜é‡
         ifs.read(reinterpret_cast<char*>(&room.m_state), sizeof(ROOM_STATE));
 
-        // ¶ÁÈë m_number ³ÉÔ±±äÁ¿ËùÕ¼ÄÚ´æ´óĞ¡¼°ÆäÖµ
+        // è¯»å…¥ m_number æˆå‘˜å˜é‡æ‰€å å†…å­˜å¤§å°åŠå…¶å€¼
         size_t number_len = 0;
         ifs.read(reinterpret_cast<char*>(&number_len), sizeof(size_t));
-        if (ifs.eof()) break;  // ¼ì²éÊÇ·ñµ½´ïÎÄ¼şÄ©Î²
-        vector<char> number_buffer(number_len + 1, '\0');  // ¶¯Ì¬·ÖÅä»º³åÇø
+        if (ifs.eof()) break;  // æ£€æŸ¥æ˜¯å¦åˆ°è¾¾æ–‡ä»¶æœ«å°¾
+        vector<char> number_buffer(number_len + 1, '\0');  // åŠ¨æ€åˆ†é…ç¼“å†²åŒº
         ifs.read(&number_buffer[0], number_len);
-        room.m_number.assign(&number_buffer[0], number_len);  // Ê¹ÓÃ assign ¶ø²»ÊÇÖ±½Ó¸³Öµ
+        room.m_number.assign(&number_buffer[0], number_len);  // ä½¿ç”¨ assign è€Œä¸æ˜¯ç›´æ¥èµ‹å€¼
 
-        // ½«¶ÁÈ¡µÄ·¿¼äĞÅÏ¢²åÈëµ½ map ÖĞ
+        // å°†è¯»å–çš„æˆ¿é—´ä¿¡æ¯æ’å…¥åˆ° map ä¸­
         room_list.insert(make_pair(room.m_number, room));
     }
 
-    // 3. ¹Ø±ÕÎÄ¼ş
+    // 3. å…³é—­æ–‡ä»¶
     ifs.close();
     return room_list;
 }
 
-// »ñÈ¡¿Í·¿±àºÅ
+// è·å–å®¢æˆ¿ç¼–å·
 string GuestRoom::get_num() {
     return m_number;
 }
 
-// ÉèÖÃ¿Í·¿×´Ì¬
+// è®¾ç½®å®¢æˆ¿çŠ¶æ€
 void GuestRoom::set_state() {
     m_state = CHECK_IN;
 }
 
-// »ñÈ¡¿Í·¿Ãû³Æ
+// è·å–å®¢æˆ¿åç§°
 string GuestRoom::get_name() {
     return m_name;
 }
 
-// »ñÈ¡¿Í·¿¼Û¸ñ
+// è·å–å®¢æˆ¿ä»·æ ¼
 int GuestRoom::get_price() {
     return m_price;
 }
 
-// »ñÈ¡¿Í·¿Ãæ»ı
+// è·å–å®¢æˆ¿é¢ç§¯
 int GuestRoom::get_area() {
     return m_area;
 }
 
-// »ñÈ¡¿Í·¿´²Î»ÊıÁ¿
+// è·å–å®¢æˆ¿åºŠä½æ•°é‡
 int GuestRoom::get_bed_num() {
     return m_bed_number;
 }

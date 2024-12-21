@@ -1,88 +1,88 @@
-ï»¿#include <iostream>
+#include <iostream>
 #include "room_view.h"
 #include <iomanip>
 using namespace std;
-//æ˜¾ç¤ºèœå•
+//ÏÔÊ¾²Ëµ¥
 void RoomView::show_menu()
 {
-    cout << "-----------------é…’åº—ç®¡ç†ç³»ç»Ÿ-----------------" << endl;
-    cout << "*********  1. æ˜¾ç¤ºå®¢æˆ¿ä¿¡æ¯   *********" << endl;
-    cout << "*********  2. è®¾ç½®å®¢æˆ¿çŠ¶æ€   *********" << endl;
-    cout << "*********  3. åˆ é™¤å®¢æˆ¿ä¿¡æ¯   *********" << endl;
-    cout << "*********  4. æ·»åŠ å®¢æˆ¿ä¿¡æ¯   *********" << endl;
-    cout << "*********  5. é€€å‡ºç®¡ç†ç³»ç»Ÿ   *********" << endl;
+    cout << "-----------------¾Æµê¹ÜÀíÏµÍ³-----------------" << endl;
+    cout << "*********  1. ÏÔÊ¾¿Í·¿ĞÅÏ¢   *********" << endl;
+    cout << "*********  2. ÉèÖÃ¿Í·¿×´Ì¬   *********" << endl;
+    cout << "*********  3. É¾³ı¿Í·¿ĞÅÏ¢   *********" << endl;
+    cout << "*********  4. Ìí¼Ó¿Í·¿ĞÅÏ¢   *********" << endl;
+    cout << "*********  5. ÍË³ö¹ÜÀíÏµÍ³   *********" << endl;
 }
-//æ·»åŠ å®¢æˆ¿
+//Ìí¼Ó¿Í·¿
 void RoomView::add_room()
 {
     string name;
     int price;
     int bed_num;
     int area;
-    cout << "è¯·è¾“å…¥å®¢æˆ¿åç§°ï¼š" << endl;
+    cout << "ÇëÊäÈë¿Í·¿Ãû³Æ£º" << endl;
     cin >> name;
-    cout << "è¯·è¾“å…¥å®¢æˆ¿ä»·æ ¼ï¼š" << endl;
+    cout << "ÇëÊäÈë¿Í·¿¼Û¸ñ£º" << endl;
     cin >> price;
-    cout << "è¯·è¾“å…¥å®¢æˆ¿åºŠæ•°ï¼š" << endl;
+    cout << "ÇëÊäÈë¿Í·¿´²Êı£º" << endl;
     cin >> bed_num;
-    cout << "è¯·è¾“å…¥å®¢æˆ¿é¢ç§¯ï¼š" << endl;
+    cout << "ÇëÊäÈë¿Í·¿Ãæ»ı£º" << endl;
     cin >> area;
-    //åˆ›å»ºå®¢æˆ¿å¯¹è±¡
+    //´´½¨¿Í·¿¶ÔÏó
     GuestRoom room(name, price, bed_num, area,FREE);
-    //è°ƒç”¨å®¢æˆ¿ç®¡ç†æ¨¡å—çš„add_room()å‡½æ•°æ·»åŠ å®¢æˆ¿
+    //µ÷ÓÃ¿Í·¿¹ÜÀíÄ£¿éµÄadd_room()º¯ÊıÌí¼Ó¿Í·¿
     m_grm.add_room(room);
 }
-//åˆ é™¤å®¢æˆ¿
+//É¾³ı¿Í·¿
 void RoomView::remove_data()
 {
-    cout << "è¯·è¾“å…¥è¦åˆ é™¤çš„å®¢æˆ¿ç¼–å·ï¼š";
+    cout << "ÇëÊäÈëÒªÉ¾³ıµÄ¿Í·¿±àºÅ£º";
     string room_number;
     cin >> room_number;
-    //è°ƒç”¨å®¢æˆ¿ç®¡ç†æ¨¡å—çš„remove_data()å‡½æ•°åˆ é™¤å®¢æˆ¿
+    //µ÷ÓÃ¿Í·¿¹ÜÀíÄ£¿éµÄremove_data()º¯ÊıÉ¾³ı¿Í·¿
     m_grm.remove_data(room_number);
 }
-//è®¾ç½®å®¢æˆ¿çŠ¶æ€
+//ÉèÖÃ¿Í·¿×´Ì¬
 void RoomView::set_room()
 {
     string number;
-    cout << "è¯·è¾“å…¥è¦è®¾ç½®çš„å®¢æˆ¿ç¼–å·ï¼š";
+    cout << "ÇëÊäÈëÒªÉèÖÃµÄ¿Í·¿±àºÅ£º";
     cin >> number;
     m_grm.set_room_state(number);
 }
-//æ˜¾ç¤ºæ‰€æœ‰å®¢æˆ¿ä¿¡æ¯
+//ÏÔÊ¾ËùÓĞ¿Í·¿ĞÅÏ¢
 void RoomView::show_all()
 {
-    cout << "-----------------æ‰€æœ‰å®¢æˆ¿ä¿¡æ¯-----------------" << endl;
-    cout << "ç¼–å·" << "\t " << "åç§°" << "\t\t" << "é¢ç§¯" << "\t" << "ä»·æ ¼" << "\t" << "åºŠä½æ•°é‡" << "\t" << "çŠ¶æ€" << endl;
+    cout << "-----------------ËùÓĞ¿Í·¿ĞÅÏ¢-----------------" << endl;
+    cout << "±àºÅ" << "\t " << "Ãû³Æ" << "\t\t" << "Ãæ»ı" << "\t" << "¼Û¸ñ" << "\t" << "´²Î»ÊıÁ¿" << "\t" << "×´Ì¬" << endl;
     cout << "---------------------------------------------" << endl;
     GuestRoom grm;
     map<string, GuestRoom> rooms;
     rooms = grm.read_data();
     if (rooms.empty())
     {
-        cout << "è¯·æ·»åŠ å®¢æˆ¿ä¿¡æ¯åå†è¿›è¡Œæ“ä½œ!" << endl;
+        cout << "ÇëÌí¼Ó¿Í·¿ĞÅÏ¢ºóÔÙ½øĞĞ²Ù×÷!" << endl;
     }
     for (auto& room : rooms)
     {
-        cout << room.second.get_num() << "\t" << setw(10) << room.second.get_name() << "\t" << room.second.get_area() << "å¹³æ–¹\t" << room.second.get_price() << "å…ƒ\t" << room.second.get_bed_num() << "ä¸ª\t\t" << room.second.show_state() << endl;
+        cout << room.second.get_num() << "\t" << setw(10) << room.second.get_name() << "\t" << room.second.get_area() << "Æ½·½\t" << room.second.get_price() << "Ôª\t" << room.second.get_bed_num() << "¸ö\t\t" << room.second.show_state() << endl;
     }
     cout << "---------------------------------------------" << endl;
 }
-//å¯åŠ¨é…’åº—ç®¡ç†ç³»ç»Ÿ
+//Æô¶¯¾Æµê¹ÜÀíÏµÍ³
 void RoomView::run()
 {
-    //å®šä¹‰stateå˜é‡æ ‡è¯†ç³»ç»Ÿæ˜¯å¦å¯åŠ¨
+    //¶¨Òåstate±äÁ¿±êÊ¶ÏµÍ³ÊÇ·ñÆô¶¯
     bool state = true;
     while (state)
     {
-        //æ˜¾ç¤ºèœå•
+        //ÏÔÊ¾²Ëµ¥
         show_menu();
-        //è·å–è¾“å…¥çš„å‘½ä»¤
+        //»ñÈ¡ÊäÈëµÄÃüÁî
         int flag = -1;
-        cout << "è¯·è¾“å…¥æ‚¨çš„æ“ä½œï¼š";
+        cout << "ÇëÊäÈëÄúµÄ²Ù×÷£º";
         cin >> flag;
         system("cls");
-        //æ ¹æ®è¾“å…¥æ‰§è¡Œå¯¹åº”æ“ä½œ
+        //¸ù¾İÊäÈëÖ´ĞĞ¶ÔÓ¦²Ù×÷
         switch (flag)
         {
         case 1:

@@ -1,73 +1,73 @@
-#include "room_manager.h"
+ï»¿#include "room_manager.h"
 #include "guest_room.h"
 #include <iostream>
 using namespace std;
-//¹¹Ôìº¯ÊıÊµÏÖ
+//æ„é€ å‡½æ•°å®ç°
 GuestRoomManager::GuestRoomManager()
 {
     GuestRoom().read_data();
 }
-//²éÕÒ¿Í·¿
+//æŸ¥æ‰¾å®¢æˆ¿
 bool GuestRoomManager::check_in(const string number)
 {
-    //¶ÁÈ¡ÎÄ¼şÖĞÊı¾İµ½ÈİÆ÷
+    //è¯»å–æ–‡ä»¶ä¸­æ•°æ®åˆ°å®¹å™¨
     GuestRoom grm;
     m_room_list = grm.read_data();
-    //ÔÚÈİÆ÷ÖĞ²éÕÒ¿Í·¿
+    //åœ¨å®¹å™¨ä¸­æŸ¥æ‰¾å®¢æˆ¿
     if (m_room_list.find(number) != m_room_list.end())
     {
         return false;
     }
     return true;
 }
-//Ìí¼Ó¿Í·¿
+//æ·»åŠ å®¢æˆ¿
 void GuestRoomManager::add_room( GuestRoom room)
 {
-    //ÅĞ¶Ï¿Í·¿±àºÅÊÇ·ñ´æÔÚ
+    //åˆ¤æ–­å®¢æˆ¿ç¼–å·æ˜¯å¦å­˜åœ¨
     if (check_in(room.get_num()))
     {
-        cout<<"·¿¼ä±àºÅÒÑ´æÔÚ"<<endl;
+        cout<<"æˆ¿é—´ç¼–å·å·²å­˜åœ¨"<<endl;
         return;
     }
-    //½«¿Í·¿Ìí¼Óµ½ÈİÆ÷ÖĞ
+    //å°†å®¢æˆ¿æ·»åŠ åˆ°å®¹å™¨ä¸­
     m_room_list.insert(make_pair(room.get_num(),room));
-    //½«ÈİÆ÷ÖĞµÄÊı¾İ±£´æµ½ÎÄ¼şÖĞ
+    //å°†å®¹å™¨ä¸­çš„æ•°æ®ä¿å­˜åˆ°æ–‡ä»¶ä¸­
     GuestRoom().save_data(m_room_list);
 }
 
-//É¾³ı¿Í·¿Êı¾İ
+//åˆ é™¤å®¢æˆ¿æ•°æ®
 bool GuestRoomManager::remove_data(const string number)
 {
-    //ÅĞ¶Ï¿Í·¿±àºÅÊÇ·ñ´æÔÚ
+    //åˆ¤æ–­å®¢æˆ¿ç¼–å·æ˜¯å¦å­˜åœ¨
     if (!check_in(number))
     {
-        cout<<"·¿¼ä±àºÅ²»´æÔÚ"<<endl;
+        cout<<"æˆ¿é—´ç¼–å·ä¸å­˜åœ¨"<<endl;
         return false;
     }
-    //É¾³ı
+    //åˆ é™¤
     m_room_list = GuestRoom().read_data();
     m_room_list.erase(number);
-    //¸üĞÂÎÄ¼ş
+    //æ›´æ–°æ–‡ä»¶
     GuestRoom().save_data(m_room_list);
     return true;
 }
 
-//ÉèÖÃ¿Í·¿×´Ì¬
+//è®¾ç½®å®¢æˆ¿çŠ¶æ€
 void GuestRoomManager::set_room_state(string number)
 {
-    //ÅĞ¶Ï¿Í·¿±àºÅÊÇ·ñ´æÔÚ
+    //åˆ¤æ–­å®¢æˆ¿ç¼–å·æ˜¯å¦å­˜åœ¨
     if (!check_in(number))
     {
-        cout<<"·¿¼ä±àºÅ²»´æÔÚ"<<endl;
+        cout<<"æˆ¿é—´ç¼–å·ä¸å­˜åœ¨"<<endl;
         return;
     }
     else
     {
-        //½«ÎÄ¼şÖĞ¿Í·¿Êı¾İ¶ÁÈ¡µ½ÎÄ¼şÖĞ
+        //å°†æ–‡ä»¶ä¸­å®¢æˆ¿æ•°æ®è¯»å–åˆ°æ–‡ä»¶ä¸­
         m_room_list = GuestRoom().read_data();
-        //ÉèÖÃÎªÈë×¡×´Ì¬
+        //è®¾ç½®ä¸ºå…¥ä½çŠ¶æ€
         m_room_list[number].set_state();
-        //½«Êı¾İ±£´æµ½ÎÄ¼şÖĞ
+        //å°†æ•°æ®ä¿å­˜åˆ°æ–‡ä»¶ä¸­
         GuestRoom().save_data(m_room_list);
     }
 }

@@ -1,14 +1,14 @@
-#pragma once
+ï»¿#pragma once
 #include <string>
 #include <map>
 using namespace std;
-//¶¨Òåenum ROOM_STATEÃ¶¾ÙÀàĞÍ£¬±íÊ¾¿Í·¿×´Ì¬£º¿ÕÏĞ¡¢Èë×¡
+//å®šä¹‰enum ROOM_STATEæšä¸¾ç±»å‹ï¼Œè¡¨ç¤ºå®¢æˆ¿çŠ¶æ€ï¼šç©ºé—²ã€å…¥ä½
 enum ROOM_STATE
 {
     FREE = 0,
     CHECK_IN
 };
-//¿Í·¿Àà
+//å®¢æˆ¿ç±»
 class GuestRoom
 {
 public:
@@ -29,7 +29,7 @@ private:
     string m_number;
     string m_name;
     int m_price;
+    int m_area;
     int m_bed_number;
-	int m_area;
     enum ROOM_STATE m_state;
 };
